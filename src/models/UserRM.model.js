@@ -1,4 +1,4 @@
-const { Schema , model, models } = require('mongoose')
+const { Schema, model, models } = require('mongoose')
 const bcrypt = require('bcrypt')
 
 const userSchema = new Schema({
@@ -6,7 +6,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    "last-name": { 
+    "lastName": { 
         type: String,
         required: true,
         minlength: [1, 'last name is required']
@@ -33,8 +33,10 @@ const userSchema = new Schema({
         type: Number,
         required: true,
     },
-    description: String,
-    default: false,
+    description: {
+      type : String,
+      required: false,
+    },
     ranking : [],
 },{
     timestamps: true 
