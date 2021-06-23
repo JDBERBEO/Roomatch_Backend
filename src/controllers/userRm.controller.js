@@ -17,6 +17,7 @@ module.exports = {
         }catch(err) {   
             res.status(400).json({ message: err.message })
          }
+<<<<<<< HEAD
       },
    async signin(req, res) {
      try {
@@ -55,4 +56,8 @@ module.exports = {
      }
    }
  }
+=======
+      }
+   }
+>>>>>>> 1142dff1d07a8f32cf2349353ed52ec69df6279c
 
