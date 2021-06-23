@@ -57,5 +57,4 @@ module.exports = {
         res.status(400).json({ message: "something went wrong" });
       });
   },
-  
 };
