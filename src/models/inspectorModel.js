@@ -57,15 +57,15 @@ const inspectorSchema = new Schema(
       trim: true,
     },
     degrees: {
-      type: Array,
+      type: [String],
       required: [true, "degrees are required"],
     },
     documents: {
-      type: Array,
+      type: [String],
       required: [true, "documents are required"],
     },
     personalReferences: {
-      type: Array,
+      type: [String],
       required: [true, "personal References are required"],
     },
   },
