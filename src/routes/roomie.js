@@ -1,7 +1,10 @@
-const roomieController = require('../controllers/userRm.controler.js') 
 const router = require('express').Router()
+const roomieController  = require('../controllers/roomie.controller')
+//const { auth } = require('../utils/middlewares')
 
-router.route("/signup").post(roomieController.create); 
-router.route("/signin").post(roomieController.signin);
+
+router.route('/signup').post(roomieController.signup)
+router.route('/signin').post(roomieController.signin)
+router.route('/profile').get(roomieController.show)
 
 module.exports = router
