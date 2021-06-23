@@ -3,9 +3,11 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const connect = require("./db");
+const roomieRouter = require("./routes/roomie.js");
+const reservationRouter = require("./routes/reservation");
 const inspectorRouter = require("./routes/inspector");
-const roomieRouter = "./routes/roomie.js";
 
+const port = process.env.PORT || 8000;
 const app = express();
 connect();
 
@@ -13,9 +15,10 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
+app.use("/reservations", reservationRouter);
 app.use("/inspectors", inspectorRouter);
 app.use("/roomie", roomieRouter);
 
 app.listen(8000, () => {
-  console.log("app running at http://localhost:8000");
+  console.log(`App runnig at http:/localhost:${port}`);
 });
