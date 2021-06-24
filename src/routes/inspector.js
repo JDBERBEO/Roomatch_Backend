@@ -1,8 +1,7 @@
-const router = require('express').Router()
-const inspectorController = require('../controllers')
+const router = require("express").Router();
+const inspectorController = require("../controllers/inspectorController");
 
-router.route('/signup').post((req, res) => { res.send('ok sign post '); })
-router.route('/login').post((req, res) => { res.send('ok login post'); })
+router.route("/signup").post(inspectorController.signup);
+router.route("/login").post(inspectorController.login);
 
-module.exports = router
-
+module.exports = router;
