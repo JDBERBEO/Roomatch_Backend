@@ -21,13 +21,12 @@ const inspectorSchema = new Schema(
       trum: true,
       required: [true, "email is required"],
       unique: true,
-      match: [emailRegexp, "email invalido"],
+      match: [emailRegexp, "email invalid"],
       validate: [
         {
           async validator(email) {
             try {
               const user = await models.Inspector.findOne({ email });
-              console.log("this is user", user);
               return !user;
             } catch (error) {
               return false;
