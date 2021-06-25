@@ -1,7 +1,7 @@
 const UserHost = require("../models/UserHostModel");
 
 module.exports = {
-  create(req, res) {
+  signup(req, res) {
     const { body } = req;
     UserHost.create(body)
       .then((userh) => {
