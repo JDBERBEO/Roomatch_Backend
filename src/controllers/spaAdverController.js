@@ -14,7 +14,7 @@ module.exports = {
         res.status(201).json(adver);
       })
       .catch((err) => {
-        res.status(400).json({ message: `something went wrong: ${err}` });
+        res.status(400).json({ message: "something went wrong" });
       });
   },
 
@@ -28,13 +28,14 @@ module.exports = {
       });
   },
   show(req, res) {
-    const { userId } = req.params;
-    Advertisement.findById(userId)
+    const { adverId } = req.params;
+    Advertisement.findById(adverId)
+      .populate("host")
       .then((adver) => {
         res.status(200).json(adver);
       })
       .catch((err) => {
-        res.status(400).json({ message: `something went wrong: ${err}` });
+        res.status(400).json({ message: "something went wrong" });
       });
   },
 
@@ -49,7 +50,7 @@ module.exports = {
         res.status(200).json(adver);
       })
       .catch((err) => {
-        res.status(400).json({ message: `something went wrong: ${err}` });
+        res.status(400).json({ message: "something went wrong" });
       });
   },
 
@@ -60,7 +61,7 @@ module.exports = {
         res.status(400).json(adver);
       })
       .catch((err) => {
-        res.status(400).json({ message: `something went wrong: ${err}` });
+        res.status(400).json({ message: "something went wrong" });
       });
   },
 };
