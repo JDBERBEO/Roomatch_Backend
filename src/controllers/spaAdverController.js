@@ -2,8 +2,14 @@ const Advertisement = require("../models/SpaAdverModel");
 
 module.exports = {
   create(req, res) {
-    const { body } = req;
-    Advertisement.create(body)
+    const {
+      body,
+      params: { hostId },
+    } = req;
+    Advertisement.create({
+      ...body,
+      host: hostId,
+    })
       .then((adver) => {
         res.status(201).json(adver);
       })
@@ -18,12 +24,13 @@ module.exports = {
         res.status(201).json(adver);
       })
       .catch((err) => {
-        res.status(400).json({ message: "Something went wrong" });
+        res.status(400).json({ message: `something went wrong: ${err}` });
       });
   },
   show(req, res) {
-    const { userId } = req.params;
-    Advertisement.findById(userId)
+    const { adverId } = req.params;
+    Advertisement.findById(adverId)
+      .populate("host")
       .then((adver) => {
         res.status(200).json(adver);
       })
