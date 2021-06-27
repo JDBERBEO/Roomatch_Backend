@@ -22,11 +22,31 @@ module.exports = {
       ...body,
       host: hostId,
     })
+<<<<<<< HEAD
+      .then((advertisement) => {
+        Host.findById(hostId).then((host) => {
+          host.posts.push(advertisement._id);
+
+          host
+            .save({ validateBeforeSave: false })
+            .then(() => {
+              res.status(201).json(advertisement);
+            })
+            .catch((err) => {
+              res.status(400).json({ message: err.message });
+            });
+        });
+=======
       .then((adver) => {
         res.status(201).json(adver);
+>>>>>>> develop
       })
       .catch((err) => {
+<<<<<<< HEAD
         res.status(400).json({ message: "something went wrong" });
+>>>>>>> develop
+=======
+        res.status(400).json({ message: err.message });
 >>>>>>> develop
       });
       const host = await Host.findById(hostId);
@@ -49,14 +69,20 @@ module.exports = {
     }
 =======
   list(req, res) {
-    Advertisement.find()
+    const { hostId } = req.params;
+    Advertisement.find({ host: hostId })
       .then((adver) => {
         res.status(201).json(adver);
       })
       .catch((err) => {
+<<<<<<< HEAD
+        res.status(400).json({ message: err.message });
+=======
         res.status(400).json({ message: `something went wrong: ${err}` });
+>>>>>>> develop
       });
   },
+
   show(req, res) {
     const { adverId } = req.params;
     Advertisement.findById(adverId)
@@ -65,11 +91,12 @@ module.exports = {
         res.status(200).json(adver);
       })
       .catch((err) => {
-        res.status(400).json({ message: "something went wrong" });
+        res.status(400).json({ message: err.message });
       });
 >>>>>>> develop
   },
 
+<<<<<<< HEAD
   async show(req, res) {
     try {
       const { adverId } = req.params;
@@ -88,6 +115,20 @@ module.exports = {
       } = req;
       const adver = await Advertisement.findByIdAndUpdate(adverId, body, {
         new: true,
+=======
+  update(req, res) {
+    const {
+      params: { adverId },
+      body,
+    } = req;
+
+    Advertisement.findByIdAndUpdate(adverId, body, { new: true })
+      .then((adver) => {
+        res.status(200).json(adver);
+      })
+      .catch((err) => {
+        res.status(400).json({ message: err.message });
+>>>>>>> develop
       });
       res.status(200).json(adver);
     } catch (err) {
@@ -95,6 +136,7 @@ module.exports = {
     }
   },
 
+<<<<<<< HEAD
   async destroy(req, res) {
     try {
       const { adverId } = req.params;
@@ -103,5 +145,16 @@ module.exports = {
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
+=======
+  destroy(req, res) {
+    const { adverId } = req.params;
+    Advertisement.findByIdAndDelete(adverId)
+      .then((adver) => {
+        res.status(400).json(adver);
+      })
+      .catch((err) => {
+        res.status(400).json({ message: err.message });
+      });
+>>>>>>> develop
   },
 };
