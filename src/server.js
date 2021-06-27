@@ -5,7 +5,11 @@ const morgan = require("morgan");
 const connect = require("./db");
 const roomieRouter = require("./routes/roomie.js");
 const reservationRouter = require("./routes/reservation");
+<<<<<<< HEAD
 // const inspectorRouter = require("./routes/inspector");
+=======
+const inspectorRouter = require("./routes/inspector");
+>>>>>>> develop
 const hostRouter = require("./routes/userHost");
 const spaAdver = require("./routes/spaAdver");
 

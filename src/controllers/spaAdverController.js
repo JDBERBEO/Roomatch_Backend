@@ -2,6 +2,7 @@ const Advertisement = require("../models/SpaAdverModel");
 const Host = require("../models/UserHostModel");
 
 module.exports = {
+<<<<<<< HEAD
   async create(req, res) {
     try {
       const {
@@ -11,6 +12,22 @@ module.exports = {
       const advertisement = await Advertisement.create({
         ...body,
         host: hostId,
+=======
+  create(req, res) {
+    const {
+      body,
+      params: { hostId },
+    } = req;
+    Advertisement.create({
+      ...body,
+      host: hostId,
+    })
+      .then((adver) => {
+        res.status(201).json(adver);
+      })
+      .catch((err) => {
+        res.status(400).json({ message: "something went wrong" });
+>>>>>>> develop
       });
       const host = await Host.findById(hostId);
       host.posts.push(advertisement._id);
@@ -21,6 +38,7 @@ module.exports = {
     }
   },
 
+<<<<<<< HEAD
   async list(req, res) {
     try {
       const { hostId } = req.params;
@@ -29,6 +47,27 @@ module.exports = {
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
+=======
+  list(req, res) {
+    Advertisement.find()
+      .then((adver) => {
+        res.status(201).json(adver);
+      })
+      .catch((err) => {
+        res.status(400).json({ message: `something went wrong: ${err}` });
+      });
+  },
+  show(req, res) {
+    const { adverId } = req.params;
+    Advertisement.findById(adverId)
+      .populate("host")
+      .then((adver) => {
+        res.status(200).json(adver);
+      })
+      .catch((err) => {
+        res.status(400).json({ message: "something went wrong" });
+      });
+>>>>>>> develop
   },
 
   async show(req, res) {
