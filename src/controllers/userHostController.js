@@ -1,60 +1,55 @@
 const UserHost = require("../models/UserHostModel");
 
 module.exports = {
-  create(req, res) {
-    const { body } = req;
-    UserHost.create(body)
-      .then((userh) => {
-        res.status(201).json(userh);
-      })
-      .catch((err) => {
-        res
-          .status(400)
-          .json({ message: `something went wrong: ${err.message}` });
-      });
+  async create(req, res) {
+    try {
+      const { body } = req;
+      const userh = await UserHost.create(body);
+      res.status(201).json(userh);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
   },
-  list(req, res) {
-    UserHost.find()
-      .then((userh) => {
-        res.status(201).json(userh);
-      })
-      .catch((err) => {
-        res.status(400).json({ message: "Something went wrong" });
-      });
+  async list(req, res) {
+    try {
+      const userh = await UserHost.find();
+      res.status(201).json(userh);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
   },
-  show(req, res) {
-    const { userhId } = req.params;
-    UserHost.findById(userhId)
-      .then((userh) => {
-        res.status(200).json(userh);
-      })
-      .catch((err) => {
-        res.status(400).json({ message: "something went wrong" });
-      });
+  async show(req, res) {
+    try {
+      const { userhId } = req.params;
+      const userh = await UserHost.findById(userhId);
+      res.status(200).json(userh);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
   },
 
-  update(req, res) {
-    const {
-      params: { userhId },
-      body,
-    } = req;
-
-    UserHost.findByIdAndUpdate(userhId, body, { new: true })
-      .then((userh) => {
-        res.status(200).json(userh);
-      })
-      .catch((err) => {
-        res.status(400).json({ message: "something went wrong" });
+  async update(req, res) {
+    try {
+      const {
+        params: { userhId },
+        body,
+      } = req;
+      const userh = await UserHost.findByIdAndUpdate(userhId, body, {
+        new: true,
       });
+      res.status(200).json(userh);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
   },
-  destroy(req, res) {
-    const { userhId } = req.params;
-    UserHost.findByIdAndDelete(userhId)
-      .then((userh) => {
-        res.status(400).json(userh);
-      })
-      .catch((err) => {
-        res.status(400).json({ message: "something went wrong" });
-      });
+
+  async destroy(req, res) {
+    try {
+      const { userhId } = req.params;
+      const userh = await UserHost.findByIdAndDelete(userhId);
+      res.status(400).json(userh);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
   },
 };
