@@ -43,6 +43,9 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    posts: {
+      type: [{ type: Schema.Types.ObjectId, ref: "Advertisement" }],
+    },
     ranking: {
       type: Number,
     },
