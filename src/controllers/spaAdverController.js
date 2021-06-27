@@ -11,6 +11,7 @@ module.exports = {
       ...body,
       host: hostId,
     })
+<<<<<<< HEAD
       .then((advertisement) => {
         Host.findById(hostId).then((host) => {
           host.posts.push(advertisement._id);
@@ -24,6 +25,10 @@ module.exports = {
               res.status(400).json({ message: err.message });
             });
         });
+=======
+      .then((adver) => {
+        res.status(201).json(adver);
+>>>>>>> develop
       })
       .catch((err) => {
         res.status(400).json({ message: err.message });
@@ -37,7 +42,11 @@ module.exports = {
         res.status(201).json(adver);
       })
       .catch((err) => {
+<<<<<<< HEAD
         res.status(400).json({ message: err.message });
+=======
+        res.status(400).json({ message: `something went wrong: ${err}` });
+>>>>>>> develop
       });
   },
 
