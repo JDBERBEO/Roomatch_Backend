@@ -1,7 +1,9 @@
 const router = require('express').Router()
-const reservationController = require('../controllers/reservation.controller')
+const  reservationController  = require('../controllers/reservation.controller')
+const { auth } = require('../utils/middlewares')
 
-router.route('/:userId').post(()=>reservationController.create)
-router.route('/:reservationId').get(()=>reservationController.show)
+router.route('/').post(auth, reservationController.create)
+
+router.route('/:reservationId').get(auth,reservationController.show)
 
 module.exports = router
