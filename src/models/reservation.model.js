@@ -10,9 +10,9 @@ const reservationSchema = new Schema ({
     type: Date,
     required: false,
 },
-  userRm: {
+  roomie: {
     type: Schema.Types.ObjectId,
-    ref: 'UserRm',
+    ref: 'Roomie',
     required: false,
 },
   endTime: {
