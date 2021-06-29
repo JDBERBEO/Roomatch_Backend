@@ -7,7 +7,7 @@ module.exports = {
     try {
       const { body } = req;
       const userh = await UserHost.create(body);
-      const token = jwt.sign({ userId: userh._id }, "mysecretkey", {
+      const token = jwt.sign({ userId: userh._id }, "" + process.env.SECRET, {
         expiresIn: 60 * 60 * 24 * 365,
       });
       res.status(201).json({ token });
@@ -70,13 +70,24 @@ module.exports = {
         throw new Error("Invalid email or password");
       }
 
-      const token = jwt.sign({ userId: user._id }, "mysecretkey", {
+      const token = jwt.sign({ userId: user._id }, "" + process.env.SECRET, {
         expiresIn: 60 * 60 * 24 * 365,
       });
 
       res.status(201).json({ token });
     } catch (err) {
       res.status(400).json({ message: err.message });
+    }
+  },
+
+  async show(req, res) {
+    try {
+      const { roomie } = req;
+      console.log(roomie);
+      const profile = await UserHost.findById(roomie).select("-password");
+      res.status(200).json(profile);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
     }
   },
 };
