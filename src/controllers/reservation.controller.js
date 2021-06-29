@@ -3,12 +3,12 @@ const Reservation = require('../models/reservation.model')
 
 module.export = {
     create(req, res){
-      const { body, params: { userId } } = req
+      const { body, roomie } = req
         
       Reservation
         .create({ 
         ... body, 
-        userRm: userId
+        roomie
       })
       .then(reservation => {
         res.status(201).json(reservation)
@@ -23,7 +23,7 @@ module.export = {
 
       Reservation
       .findById(reservationId)
-      .populate('userRm')
+      .populate('roomie')
       .then(reservation => {
         res.status(201).json(reservation)
       })
