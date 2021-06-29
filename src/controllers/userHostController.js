@@ -1,4 +1,5 @@
 const UserHost = require("../models/UserHostModel");
+const bcrypt = require("bcrypt");
 
 module.exports = {
   async create(req, res) {
