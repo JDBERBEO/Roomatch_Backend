@@ -1,12 +1,16 @@
 const UserHost = require("../models/UserHostModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
-  async create(req, res) {
+  async signup(req, res) {
     try {
       const { body } = req;
       const userh = await UserHost.create(body);
-      res.status(201).json(userh);
+      const token = jwt.sign({ userId: userh._id }, "mysecretkey", {
+        expiresIn: 60 * 60 * 24 * 365,
+      });
+      res.status(201).json({ token });
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
@@ -49,6 +53,28 @@ module.exports = {
       const { userhId } = req.params;
       const userh = await UserHost.findByIdAndDelete(userhId);
       res.status(400).json(userh);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  },
+
+  async signin(req, res) {
+    try {
+      const { password, email } = req.body;
+      const user = await UserHost.findOne({ email });
+      if (!user) {
+        throw new Error("Invalid email or password");
+      }
+      const isValid = await bcrypt.compare(password, user.password);
+      if (!isValid) {
+        throw new Error("Invalid email or password");
+      }
+
+      const token = jwt.sign({ userId: user._id }, "mysecretkey", {
+        expiresIn: 60 * 60 * 24 * 365,
+      });
+
+      res.status(201).json({ token });
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
