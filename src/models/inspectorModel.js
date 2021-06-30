@@ -20,7 +20,6 @@ const inspectorSchema = new Schema(
       type: String,
       trum: true,
       required: [true, "email is required"],
-      unique: true,
       match: [emailRegexp, "email invalid"],
       validate: [
         {
