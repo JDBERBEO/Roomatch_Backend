@@ -1,7 +1,7 @@
 const { populate } = require('../models/reservation.model')
 const Reservation = require('../models/reservation.model')
 
-module.export = {
+module.exports = {
     create(req, res){
       const { body, roomie } = req
         
