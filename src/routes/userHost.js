@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const userHostController = require("../controllers/userHostController");
-const { auth } = require("../utilis/middlewares");
+const { auth } = require("../utils/middlewares");
 
 router.route("/").get(userHostController.list);
 router.route("/signin").post(userHostController.signin);
