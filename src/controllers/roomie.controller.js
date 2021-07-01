@@ -16,7 +16,8 @@ module.exports = {
         res.status(201).json({ token })
         }catch(err) {   
             res.status(400).json({ message: err.message })
-         }
+          console.log(err.message)
+          }
       },
 
    async signin(req, res) {
