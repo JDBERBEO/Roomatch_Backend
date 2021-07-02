@@ -65,4 +65,13 @@ module.exports = {
       res.status(400).json({ message: err.message });
     }
   },
+
+  async showAll(req, res) {
+    try {
+      const allAds = await Advertisement.find().lean();
+      res.status(200).json(allAds);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  },
 };
