@@ -1,5 +1,6 @@
 const Roomie = require('../models/roomie.model')
 const jwt = require('jsonwebtoken')
+const bcrypt = require("bcrypt");
 
 module.exports = {
     async signup(req, res) {
@@ -45,6 +46,7 @@ module.exports = {
         res.status(201).json({ token })
       } catch(error) {
         res.status(400).json({ message: error.message })
+        console.log(error)
       }
     },
     async show(req, res) {
@@ -54,6 +56,7 @@ module.exports = {
         res.status(200).json(profile)
       } catch(error) {
         res.status(404).json({ message: error.message })
+        console.log(error)
       }
     }
   }
