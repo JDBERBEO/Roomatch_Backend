@@ -7,6 +7,9 @@ router.route("/").post(
   reservationController.create
 );
 
-router.route("/:reservationId").get(auth, reservationController.show);
+router.route("/:reservationId").get(
+  // auth,
+  reservationController.show
+);
 
 module.exports = router;
