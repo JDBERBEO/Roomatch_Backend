@@ -2,7 +2,7 @@ const { model, Schema } = require("mongoose");
 
 const reservationSchema = new Schema(
   {
-    AdvertismentId: {
+    AdvertisementId: {
       type: Schema.Types.ObjectId,
       required: false,
     },
