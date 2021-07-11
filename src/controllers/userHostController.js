@@ -79,15 +79,4 @@ module.exports = {
       res.status(400).json({ message: err.message });
     }
   },
-
-  async show(req, res) {
-    try {
-      const { roomie } = req;
-      console.log(roomie);
-      const profile = await UserHost.findById(roomie).select("-password");
-      res.status(200).json(profile);
-    } catch (error) {
-      res.status(404).json({ message: error.message });
-    }
-  },
-};
+}

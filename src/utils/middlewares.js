@@ -2,18 +2,19 @@ const jwt = require("jsonwebtoken");
 
 exports.auth = (req, res, next) => {
   try {
-    const { authorization } = req.headers; //Authorization
+    const { authorization } = req.headers.authorization; //Authorization
+    
     if (!authorization) {
-      throw new Error("su sesion expiró");
+      throw new Error('Your session has expired');
     }
     const [_, token] = authorization.split(" ");
 
     if (!token) {
-      throw new Error("su sesion expiró");
+      throw new Error('Your session has expired');
     }
-    const { userId } = jwt.verify(token, "" + process.env.SECRET);
-    console.log(userId);
-    req.roomie = userId;
+    const { id } = jwt.verify(token, "" + process.env.SECRET);
+ 
+    req.roomie = id ;
     next();
   } catch (err) {
     res.status(401).json({ message: err.message });

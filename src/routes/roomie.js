@@ -4,6 +4,8 @@ const roomieController  = require('../controllers/roomie.controller')
 
 router.route('/signup').post(roomieController.signup)
 router.route('/signin').post(roomieController.signin)
-router.route('/profile').get(roomieController.show)
+router.route('/:roomie').get(roomieController.show)
+router.route('/').get(roomieController.list)
+
 
 module.exports = router

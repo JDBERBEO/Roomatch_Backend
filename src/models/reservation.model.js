@@ -13,7 +13,7 @@ const reservationSchema = new Schema(
     roomie: {
       type: Schema.Types.ObjectId,
       ref: "Roomie",
-      required: false,
+      required: [true, 'you should be logged to create a reservation'],
     },
     endDate: {
       type: Date,
@@ -21,7 +21,7 @@ const reservationSchema = new Schema(
     },
     paidReservation: {
       type: Number,
-      required: true,
+      required: false,
     },
     ocupationStatus: String,
   },
