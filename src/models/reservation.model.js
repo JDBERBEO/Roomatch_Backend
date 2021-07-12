@@ -6,17 +6,19 @@ const reservationSchema = new Schema(
       type: Schema.Types.ObjectId,
       required: false,
     },
-    startDate: {
-      type: Date,
-      required: false,
+    range: {
+      from: {
+        type: Date,
+        required: true,
+      },
+      to: {
+        type: Date,
+        required: false,
+      },
     },
     roomie: {
       type: Schema.Types.ObjectId,
       ref: "Roomie",
-      required: false,
-    },
-    endDate: {
-      type: Date,
       required: false,
     },
     paidReservation: {
