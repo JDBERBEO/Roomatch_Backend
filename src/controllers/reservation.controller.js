@@ -5,13 +5,14 @@ module.exports = {
   async create(req, res) {
     try {
       const { body, roomie } = req
+   
       const userRoomie = await Roomie.findById(roomie);
-      // if(!userRoomie) {
-      //   throw new Error('User had been created')
-      // }
+      if(!userRoomie) {
+        throw new Error('User not found')
+      }
 
       const reservation = await Reservation.create({ ...body, roomie })
-      userRoomie.allReservation.push({id});
+      userRoomie.allReservations.push(reservation._id);
       
       await userRoomie.save({ validateBeforeSave : false });
       res.status(201).json(reservation)
