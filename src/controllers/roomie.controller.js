@@ -14,10 +14,9 @@ module.exports = {
         { expiresIn: 60 * 60 * 24 * 365 }
       )
 
-      res.status(201).json({ token , roomie })
+      res.status(201).json({ token, roomie })
     } catch (err) {
       res.status(400).json({ message: err.message })
-      console.log(err.message)
     }
   },
 
@@ -43,31 +42,28 @@ module.exports = {
         { expiresIn: 60 * 60 * 24 * 365 }
       )
 
-      res.status(201).json({ token , roomie })
+      res.status(201).json({ token, roomie })
     } catch (error) {
       res.status(400).json({ message: error.message })
-      console.log(error)
     }
   },
   async show(req, res) {
     try {
-      const { roomie } = req.params
-      const profile = await UserRm.findById(roomie)
+      const { roomie } = req
+      const profile = await Roomie.findById(roomie)
       res.status(200).json(profile)
     } catch (error) {
       res.status(404).json({ message: error.message })
-      console.log(error)
     }
   },
   async list(req, res) {
     try {
       const roomies = await Roomie.find()
-      .populate('reservation')
+        .populate('reservation')
       res.status(200).json(roomies)
 
     } catch (err) {
       res.status(500).json({ message: err.message })
-      console.log(err)
     }
   },
   async update(req, res) {
@@ -79,7 +75,7 @@ module.exports = {
       res.status(200).json(roomie);
     } catch (err) {
       res.status(400).json({ message: err.message });
-  }
+    }
   },
   async destroy(req, res) {
     try {

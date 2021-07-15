@@ -43,7 +43,7 @@ const userSchema = new Schema(
     },
     description: {
       type: String,
-      default: false,
+      default: true,
     },
     allReservations: {
       type: [{ type: Schema.Types.ObjectId, ref: "Reservation" }],
