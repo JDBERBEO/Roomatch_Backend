@@ -6,15 +6,25 @@ const reservationSchema = new Schema(
       type: Schema.Types.ObjectId,
       required: false,
     },
-    range: {
-      from: {
-        type: String,
-        required: true,
-      },
-      to: {
-        type: String,
-        required: false,
-      },
+    selectedDays: {
+      type: [String],
+      required: true,
+
+      // validate: [
+      //   {
+      //     async validator(range) {
+      //       try {
+      //         const daysBookedrange = await models.Reservation.findOne({
+      //           range,
+      //         });
+      //         return !daysBookedrange;
+      //       } catch (error) {
+      //         return false;
+      //       }
+      //     },
+      //     message: "Days already booked",
+      //   },
+      // ],
     },
     roomie: {
       type: Schema.Types.ObjectId,
