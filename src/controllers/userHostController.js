@@ -13,6 +13,7 @@ module.exports = {
       res.status(201).json({ token });
     } catch (err) {
       res.status(400).json({ message: err.message });
+      console.log({ message: err.message });
     }
   },
   async list(req, res) {
@@ -21,6 +22,7 @@ module.exports = {
       res.status(201).json(userh);
     } catch (err) {
       res.status(400).json({ message: err.message });
+      console.log({ message: err.message });
     }
   },
   async show(req, res) {
@@ -30,6 +32,7 @@ module.exports = {
       res.status(200).json(userh);
     } catch (err) {
       res.status(400).json({ message: err.message });
+      console.log({ message: err.message });
     }
   },
 
@@ -45,6 +48,7 @@ module.exports = {
       res.status(200).json(userh);
     } catch (err) {
       res.status(400).json({ message: err.message });
+      console.log({ message: err.message });
     }
   },
 
@@ -55,6 +59,7 @@ module.exports = {
       res.status(400).json(userh);
     } catch (err) {
       res.status(400).json({ message: err.message });
+      console.log({ message: err.message });
     }
   },
 
@@ -77,6 +82,19 @@ module.exports = {
       res.status(201).json({ token });
     } catch (err) {
       res.status(400).json({ message: err.message });
+      console.log({ message: err.message });
     }
   },
-}
+
+  async show(req, res) {
+    try {
+      const { roomie } = req;
+      console.log(roomie);
+      const profile = await UserHost.findById(roomie).select("-password");
+      res.status(200).json(profile);
+    } catch (error) {
+      res.status(404).json({ message: error.message });
+      console.log({ message: err.message });
+    }
+  },
+};
