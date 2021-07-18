@@ -43,8 +43,12 @@ const userSchema = new Schema(
     },
     description: {
       type: String,
-      default: false,
+      default: true,
     },
+    allReservations: {
+      type: [{ type: Schema.Types.ObjectId, ref: "Reservation" }],
+    },
+
     ranking: [],
   },
   {
@@ -59,5 +63,5 @@ userSchema.pre("save", async function () {
 });
 
 const Roomie = model("Roomie", userSchema);
-// UserRm = userrms se crea en la bd en minusculas y en plural
+
 module.exports = Roomie;
