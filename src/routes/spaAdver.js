@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const adverController = require("../controllers/spaAdverController.js");
+const { auth } = require("../utils/middlewares");
 
-router.route("/getAds").get(adverController.showAll)
+router.route("/getAds").get(adverController.showAll);
 router.route("/:hostId").post(adverController.create);
-router.route("/host/:hostId").get(adverController.list);
+router.route("/hostAd").get(auth, adverController.list);
 router.route("/:adverId").get(adverController.show);
 router.route("/:adverId").put(adverController.update);
 router.route("/:adverId").delete(adverController.destroy);

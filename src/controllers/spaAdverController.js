@@ -23,8 +23,8 @@ module.exports = {
 
   async list(req, res) {
     try {
-      const { hostId } = req.params;
-      const adver = await Advertisement.find({ host: hostId });
+      const { roomie } = req;
+      const adver = await Advertisement.find({ host: roomie });
       res.status(201).json(adver);
     } catch (err) {
       res.status(400).json({ message: err.message });
