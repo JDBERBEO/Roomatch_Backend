@@ -5,19 +5,19 @@ const reservationSchema = new Schema(
     living_space_type: {
       type: String,
       required: true,
-    },   
+    },
     AdvertismentId: {
       type: Schema.Types.ObjectId,
       required: false,
     },
-    startDate: {
-      type: Date,
-      required: false,
+    selectedDays: {
+      type: [String],
+      required: true,
     },
     roomie: {
       type: Schema.Types.ObjectId,
       ref: "Roomie",
-      required: [false, 'you should be logged to create a reservation'],
+      required: [false, "you should be logged to create a reservation"],
     },
     endDate: {
       type: Date,
@@ -31,7 +31,7 @@ const reservationSchema = new Schema(
       type: Number,
       required: true,
     },
-   
+
     ocupationStatus: String,
   },
   {

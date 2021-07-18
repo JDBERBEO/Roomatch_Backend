@@ -1,43 +1,49 @@
-const Reservation = require('../models/reservation.model')
-const Roomie = require('../models/roomie.model')
+const Reservation = require("../models/reservation.model");
+const Roomie = require("../models/roomie.model");
 
 module.exports = {
   async create(req, res) {
     try {
-      const { body, roomie } = req
-   
+      const { body, roomie } = req;
+
       const userRoomie = await Roomie.findById(roomie);
-      if(!userRoomie) {
-        throw new Error('User not found')
+      if (!userRoomie) {
+        throw new Error("User not found");
       }
 
-      const reservation = await Reservation.create({ ...body, roomie })
+      const reservation = await Reservation.create({ ...body, roomie });
       userRoomie.allReservations.push(reservation._id);
-      
-      await userRoomie.save({ validateBeforeSave : false });
-      res.status(201).json(reservation)
+
+      await userRoomie.save({ validateBeforeSave: false });
+      res.status(201).json(reservation);
     } catch (error) {
-      res.status(400).json({ message: error.message })
+      res.status(400).json({ message: error.message });
     }
   },
 
   async show(req, res) {
     try {
-      const { params: { id }, roomie } = req;
-      const reservation = await Reservation.findById( {_id: id,  roomie} ).populate('roomie','name')
-      if(!reservation) throw Error('You are not allowed')
-      res.status(201).json(reservation)
+      const {
+        params: { id },
+        roomie,
+      } = req;
+      const reservation = await Reservation.findById({
+        _id: id,
+        roomie,
+      }).populate("roomie", "name");
+      if (!reservation) throw Error("You are not allowed");
+      res.status(201).json(reservation);
     } catch (error) {
-      res.status(404).json({ message: error.message })
+      res.status(404).json({ message: error.message });
     }
   },
   async list(req, res) {
     try {
-      const { roomie } = req
-      const reservations = await Reservation.find({ roomie }).select('')
-      res.status(200).json(reservations)
+      const { roomie } = req;
+      const reservations = await Reservation.find({ roomie }).select("");
+      res.status(200).json(reservations);
     } catch (err) {
-      res.status(404).json({ message: err.message })
+      res.status(404).json({ message: err.message });
     }
   },
   async showAll(req, res) {
@@ -51,13 +57,20 @@ module.exports = {
 
   async update(req, res) {
     try {
-      const { params: { id }, roomie } = req;
-      
-      const reservation = await Reservation.findByIdAndUpdate({ _id: id, roomie, new: true, });
-      
-      if(!reservation) throw Error('You are not allowed')
-     
-      res.status(200).json(reservation); 
+      const {
+        params: { id },
+        roomie,
+      } = req;
+
+      const reservation = await Reservation.findByIdAndUpdate({
+        _id: id,
+        roomie,
+        new: true,
+      });
+
+      if (!reservation) throw Error("You are not allowed");
+
+      res.status(200).json(reservation);
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
@@ -65,16 +78,20 @@ module.exports = {
 
   async delete(req, res) {
     try {
-      const {params: { id }, roomie } = req;
-      const reservation = await Reservation.findByIdAndDelete({ _id: id, roomie });
-      
-      if(!reservation.deletedCount) throw Error('You are not allowed')
-      
-      res.status(400).json({ message: 'Reservation deleted'});
+      const {
+        params: { id },
+        roomie,
+      } = req;
+      const reservation = await Reservation.findByIdAndDelete({
+        _id: id,
+        roomie,
+      });
+
+      if (!reservation.deletedCount) throw Error("You are not allowed");
+
+      res.status(400).json({ message: "Reservation deleted" });
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
   },
 };
-
-
