@@ -14,7 +14,7 @@ module.exports = {
         { expiresIn: 60 * 60 * 24 * 365 }
       )
 
-      res.status(201).json({ token, roomie })
+      res.status(201).json({ token })
     } catch (err) {
       res.status(400).json({ message: err.message })
     }
@@ -42,9 +42,10 @@ module.exports = {
         { expiresIn: 60 * 60 * 24 * 365 }
       )
 
-      res.status(201).json({ token, roomie })
+      res.status(201).json({ token })
     } catch (error) {
       res.status(400).json({ message: error.message })
+      console.log(error)
     }
   },
   async show(req, res) {
@@ -61,7 +62,6 @@ module.exports = {
       const roomies = await Roomie.find()
         .populate('reservation')
       res.status(200).json(roomies)
-
     } catch (err) {
       res.status(500).json({ message: err.message })
     }

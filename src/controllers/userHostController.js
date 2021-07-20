@@ -85,7 +85,6 @@ module.exports = {
       console.log({ message: err.message });
     }
   },
-
   async show(req, res) {
     try {
       const { roomie } = req;
