@@ -5,6 +5,8 @@ module.exports = {
   async create(req, res) {
     try {
       const { body, roomie } = req;
+      console.log("body", body);
+      console.log("roomie", roomie);
       const advertisement = await Advertisement.create({
         ...body,
         host: roomie,
@@ -63,12 +65,17 @@ module.exports = {
     }
   },
 
-    async showAll(req, res) {
-      try {
-        const allAds = await Advertisement.find().lean();
-        res.status(200).json(allAds);
-      } catch (err) {
-        res.status(400).json({ message: err.message });
-      }
-    },
+  async showAll(req, res) {
+    const { filterAd } = req.params;
+    // const { selectedDays } = req.query;
+    // console.log("query", selectedDays);
+
+    try {
+      const allAds = await Advertisement.find({ city: filterAd }).lean();
+      console.log("allads", allAds);
+      res.status(200).json(allAds);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  },
 };
