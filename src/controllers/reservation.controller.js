@@ -5,7 +5,7 @@ module.exports = {
   async create(req, res) {
     try {
       const { body, roomie } = req;
-
+      console.log("body", body);
       const userRoomie = await Roomie.findById(roomie);
       if (!userRoomie) {
         throw new Error("User not found");
@@ -14,6 +14,8 @@ module.exports = {
       const reservation = await Reservation.create({ ...body, roomie });
       userRoomie.allReservations.push(reservation._id);
 
+      //buscar advertisement
+      //guardar advertisement en el modelo de reservas
       await userRoomie.save({ validateBeforeSave: false });
       res.status(201).json(reservation);
     } catch (error) {

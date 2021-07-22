@@ -1,3 +1,4 @@
+const Reservation = require("../models/reservation.model");
 const Advertisement = require("../models/SpaAdverModel");
 const Host = require("../models/UserHostModel");
 
@@ -67,13 +68,21 @@ module.exports = {
 
   async showAll(req, res) {
     const { filterAd } = req.params;
-    // const { selectedDays } = req.query;
+    const { selectedDays } = req.query;
+    const days = JSON.parse(selectedDays);
+    console.log("days", days);
     // console.log("query", selectedDays);
 
     try {
-      const allAds = await Advertisement.find({ city: filterAd }).lean();
-      console.log("allads", allAds);
-      res.status(200).json(allAds);
+      const reservations = await Reservation.find({
+        selectedDays: { $in: days },
+      });
+      console.log("reservations", reservations);
+      const reservedAdsIds = await reservations.map((r) => r.ad_id);
+      console.log("reservedAdsIds", reservedAdsIds);
+      const ads = await Advertisement.find({ _id: { $nin: reservedAdsIds } });
+      console.log("ads", ads);
+      res.status(200).json(ads);
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
