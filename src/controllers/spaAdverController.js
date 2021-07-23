@@ -34,7 +34,10 @@ module.exports = {
   async show(req, res) {
     try {
       const { adverId } = req.params;
-      const adver = await Advertisement.findById(adverId).populate("host");
+      const adver = await Advertisement.findById(adverId)
+        .populate("host")
+        .populate("reservations");
+      console.log("ADVER", adver);
       res.status(200).json(adver);
     } catch (err) {
       res.status(400).json({ message: err.message });
@@ -67,23 +70,27 @@ module.exports = {
   },
 
   async showAll(req, res) {
-    const { filterAd } = req.params;
-    const { selectedDays } = req.query;
+    const { selectedDays, city } = req.query;
     const days = JSON.parse(selectedDays);
-    console.log("days", days);
+    // console.log("days", days);
     // console.log("query", selectedDays);
 
     try {
-      const reservations = await Reservation.find({
-        selectedDays: { $in: days },
-      });
+      const filters = {};
+      if (days) {
+        filters.selectedDays = { $in: days };
+      }
+      if (city) {
+        filters.city = city;
+      }
+      const reservations = await Reservation.find(filters);
       // console.log("reservations", reservations);
       const reservedAdsIds = reservations.map(
         (reservation) => reservation.advertisementId
       );
       // console.log("reservedAdsIds", reservedAdsIds);
       const ads = await Advertisement.find({ _id: { $nin: reservedAdsIds } });
-      console.log("ads", ads);
+      // console.log("ads", ads);
       res.status(200).json(ads);
     } catch (err) {
       res.status(400).json({ message: err.message });

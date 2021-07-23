@@ -16,22 +16,11 @@ module.exports = {
 
       const reservation = await Reservation.create({ ...body, roomie });
       userRoomie.allReservations.push(reservation._id);
-      const reservationsWithSameAdvertisementId = await Reservation.find({
-        advertisementId: body.advertisementId,
-      });
 
-      console.log(
-        "reservationsWithSameAdvertisementId",
-        reservationsWithSameAdvertisementId
-      );
-      const advertisementId = await Advertisement.findById(
-        body.advertisementId
-      );
-      advertisementId.reservations.push(
-        reservationsWithSameAdvertisementId.selectedDays
-      );
-      console.log("advertisementId", advertisementId);
-      await advertisementId.save({ validateBeforeSave: false });
+      const advertisement = await Advertisement.findById(body.advertisementId);
+      advertisement.reservations.push(reservation._id);
+      console.log("advertisement", advertisement);
+      await advertisement.save({ validateBeforeSave: false });
 
       await userRoomie.save({ validateBeforeSave: false });
       res.status(201).json(reservation);
