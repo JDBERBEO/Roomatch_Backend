@@ -25,30 +25,28 @@ module.exports = {
       console.log({ message: err.message });
     }
   },
-  async show(req, res) {
-    try {
-      const { userhId } = req.params;
-      const userh = await UserHost.findById(userhId);
-      res.status(200).json(userh);
-    } catch (err) {
-      res.status(400).json({ message: err.message });
-      console.log({ message: err.message });
-    }
-  },
+  // async show(req, res) {
+  //   try {
+  //     const { userhId } = req.params;
+  //     const userh = await UserHost.findById(userhId);
+  //     res.status(200).json(userh);
+  //   } catch (err) {
+  //     res.status(400).json({ message: err.message });
+  //     console.log({ message: err.message });
+  //   }
+  // },
+
 
   async update(req, res) {
     try {
-      const {
-        params: { userhId },
-        body,
-      } = req;
-      const userh = await UserHost.findByIdAndUpdate(userhId, body, {
+      const { roomie, body } = req;
+      const profile = await UserHost.findByIdAndUpdate(roomie, body, {
         new: true,
       });
-      res.status(200).json(userh);
+      res.status(200).json(profile);
     } catch (err) {
       res.status(400).json({ message: err.message });
-      console.log({ message: err.message });
+      console.dir(err.message)
     }
   },
 
@@ -88,12 +86,10 @@ module.exports = {
   async show(req, res) {
     try {
       const { roomie } = req;
-      console.log(roomie);
       const profile = await UserHost.findById(roomie).select("-password");
       res.status(200).json(profile);
     } catch (error) {
       res.status(404).json({ message: error.message });
-      console.log({ message: err.message });
     }
   },
 };

@@ -68,13 +68,14 @@ module.exports = {
   },
   async update(req, res) {
     try {
-      const { params: { roomieId }, body, } = req;
-      const roomie = await Roomie.findByIdAndUpdate(roomieId, body, {
+      const { roomie, body } = req;
+      const profile = await Roomie.findByIdAndUpdate(roomie, body, {
         new: true,
       });
-      res.status(200).json(roomie);
+      res.status(200).json(profile);
     } catch (err) {
       res.status(400).json({ message: err.message });
+      console.dir(err.message)
     }
   },
   async destroy(req, res) {
