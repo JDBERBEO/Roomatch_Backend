@@ -28,6 +28,7 @@ const adverSchema = new Schema(
     ranking: { type: Number, required: [false, "The field is required"] },
     house_rules: { type: String, required: [true, "The field is required"] },
     city: { type: String, requires: [true, "The field is required"] },
+    reservations: [{ type: Schema.Types.ObjectId, ref: "Reservation" }],
   },
   {
     timeStamps: true,

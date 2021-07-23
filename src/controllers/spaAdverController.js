@@ -77,9 +77,11 @@ module.exports = {
       const reservations = await Reservation.find({
         selectedDays: { $in: days },
       });
-      console.log("reservations", reservations);
-      const reservedAdsIds = await reservations.map((r) => r.ad_id);
-      console.log("reservedAdsIds", reservedAdsIds);
+      // console.log("reservations", reservations);
+      const reservedAdsIds = reservations.map(
+        (reservation) => reservation.advertisementId
+      );
+      // console.log("reservedAdsIds", reservedAdsIds);
       const ads = await Advertisement.find({ _id: { $nin: reservedAdsIds } });
       console.log("ads", ads);
       res.status(200).json(ads);

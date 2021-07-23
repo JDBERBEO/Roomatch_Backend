@@ -6,7 +6,7 @@ const reservationSchema = new Schema(
       type: String,
       required: true,
     },
-    AdvertisementId: {
+    advertisementId: {
       type: Schema.Types.ObjectId,
       ref: "Advertisement",
       required: true,

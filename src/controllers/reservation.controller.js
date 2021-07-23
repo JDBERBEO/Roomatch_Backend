@@ -1,25 +1,43 @@
 const Reservation = require("../models/reservation.model");
 const Roomie = require("../models/roomie.model");
+const Advertisement = require("../models/SpaAdverModel");
 
 module.exports = {
   async create(req, res) {
     try {
       const { body, roomie } = req;
       console.log("body", body);
+      console.log("roomie", roomie);
       const userRoomie = await Roomie.findById(roomie);
+      console.log("userRoomie", userRoomie);
       if (!userRoomie) {
         throw new Error("User not found");
       }
 
       const reservation = await Reservation.create({ ...body, roomie });
       userRoomie.allReservations.push(reservation._id);
+      const reservationsWithSameAdvertisementId = await Reservation.find({
+        advertisementId: body.advertisementId,
+      });
 
-      //buscar advertisement
-      //guardar advertisement en el modelo de reservas
+      console.log(
+        "reservationsWithSameAdvertisementId",
+        reservationsWithSameAdvertisementId
+      );
+      const advertisementId = await Advertisement.findById(
+        body.advertisementId
+      );
+      advertisementId.reservations.push(
+        reservationsWithSameAdvertisementId.selectedDays
+      );
+      console.log("advertisementId", advertisementId);
+      await advertisementId.save({ validateBeforeSave: false });
+
       await userRoomie.save({ validateBeforeSave: false });
       res.status(201).json(reservation);
     } catch (error) {
       res.status(400).json({ message: error.message });
+      console.log(error.message);
     }
   },
 
@@ -48,12 +66,18 @@ module.exports = {
       res.status(404).json({ message: err.message });
     }
   },
-  async showAll(req, res) {
+  async showAllAdvertisementsById(req, res) {
+    const { advertisementId } = req.query;
+    console.log("advertisementId", advertisementId);
     try {
+      //con el advertisementId encuentre todas las reservas asociadas a ese advertisement
+      //se crean las reservas dentro del modelo de advertisement
+      //cuando se crea una reserva, se debe incluir dentro del advertisement por su id
       const allReservations = await Reservation.find().lean();
       res.status(200).json(allReservations);
     } catch (err) {
       res.status(400).json({ message: err.message });
+      console.log(err.message);
     }
   },
 
