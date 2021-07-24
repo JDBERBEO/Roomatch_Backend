@@ -80,16 +80,28 @@ module.exports = {
       if (days) {
         filters.selectedDays = { $in: days };
       }
-      if (city) {
-        filters.city = city;
-      }
+      // if (city) {
+      //   filters.city = city;
+      // }
       const reservations = await Reservation.find(filters);
       // console.log("reservations", reservations);
       const reservedAdsIds = reservations.map(
         (reservation) => reservation.advertisementId
       );
       // console.log("reservedAdsIds", reservedAdsIds);
-      const ads = await Advertisement.find({ _id: { $nin: reservedAdsIds } });
+      let ads = "";
+      if (city) {
+        console.log("city", city);
+        ads = await Advertisement.find({
+          _id: { $nin: reservedAdsIds },
+          city,
+        });
+      } else {
+        console.log("sin city");
+        ads = await Advertisement.find({
+          _id: { $nin: reservedAdsIds },
+        });
+      }
       // console.log("ads", ads);
       res.status(200).json(ads);
     } catch (err) {
