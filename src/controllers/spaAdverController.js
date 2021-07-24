@@ -6,8 +6,6 @@ module.exports = {
   async create(req, res) {
     try {
       const { body, roomie } = req;
-      console.log("body", body);
-      console.log("roomie", roomie);
       const advertisement = await Advertisement.create({
         ...body,
         host: roomie,
@@ -37,7 +35,6 @@ module.exports = {
       const adver = await Advertisement.findById(adverId)
         .populate("host")
         .populate("reservations");
-      console.log("ADVER", adver);
       res.status(200).json(adver);
     } catch (err) {
       res.status(400).json({ message: err.message });
@@ -72,37 +69,27 @@ module.exports = {
   async showAll(req, res) {
     const { selectedDays, city } = req.query;
     const days = JSON.parse(selectedDays);
-    // console.log("days", days);
-    // console.log("query", selectedDays);
 
     try {
       const filters = {};
       if (days) {
         filters.selectedDays = { $in: days };
       }
-      // if (city) {
-      //   filters.city = city;
-      // }
       const reservations = await Reservation.find(filters);
-      // console.log("reservations", reservations);
       const reservedAdsIds = reservations.map(
         (reservation) => reservation.advertisementId
       );
-      // console.log("reservedAdsIds", reservedAdsIds);
       let ads = "";
       if (city) {
-        console.log("city", city);
         ads = await Advertisement.find({
           _id: { $nin: reservedAdsIds },
           city,
         });
       } else {
-        console.log("sin city");
         ads = await Advertisement.find({
           _id: { $nin: reservedAdsIds },
         });
       }
-      // console.log("ads", ads);
       res.status(200).json(ads);
     } catch (err) {
       res.status(400).json({ message: err.message });
