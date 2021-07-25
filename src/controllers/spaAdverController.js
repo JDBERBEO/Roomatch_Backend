@@ -68,12 +68,29 @@ module.exports = {
 
   async showAll(req, res) {
     const { selectedDays, city } = req.query;
+    console.log("city", city);
+    console.log("selectedDays", selectedDays);
     const days = JSON.parse(selectedDays);
+    console.log("days", days);
+
+    let filters = {};
+    let Iso8001Days = [];
+
+    if (days[0] === "") {
+      filters = {};
+    } else {
+      Iso8001Days = days.map((day) => new Date(day));
+      console.log("Iso8001 desde el else", Iso8001Days);
+    }
+
+    console.log("Iso8001Days", Iso8001Days);
+    const Iso8001DaysString = Iso8001Days.map((day) => day.toISOString());
+    console.log("Iso8001DaysString", Iso8001DaysString);
 
     try {
-      const filters = {};
-      if (days) {
-        filters.selectedDays = { $in: days };
+      console.log("filters", filters);
+      if (Iso8001DaysString) {
+        filters.selectedDays = { $in: Iso8001DaysString };
       }
       const reservations = await Reservation.find(filters);
       const reservedAdsIds = reservations.map(
