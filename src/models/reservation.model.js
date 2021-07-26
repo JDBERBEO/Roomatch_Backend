@@ -6,9 +6,10 @@ const reservationSchema = new Schema(
       type: String,
       required: true,
     },
-    AdvertismentId: {
+    advertisementId: {
       type: Schema.Types.ObjectId,
-      required: false,
+      ref: "Advertisement",
+      required: true,
     },
     selectedDays: {
       type: [String],
@@ -19,20 +20,10 @@ const reservationSchema = new Schema(
       ref: "Roomie",
       required: [false, "you should be logged to create a reservation"],
     },
-    endDate: {
-      type: Date,
-      required: false,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
     paidReservation: {
       type: Number,
       required: true,
     },
-
-    ocupationStatus: String,
   },
   {
     timestamps: true,

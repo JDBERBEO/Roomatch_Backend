@@ -1,3 +1,4 @@
+const Reservation = require("../models/reservation.model");
 const Advertisement = require("../models/SpaAdverModel");
 const Host = require("../models/UserHostModel");
 
@@ -31,7 +32,9 @@ module.exports = {
   async show(req, res) {
     try {
       const { adverId } = req.params;
-      const adver = await Advertisement.findById(adverId).populate("host");
+      const adver = await Advertisement.findById(adverId)
+        .populate("host")
+        .populate("reservations");
       res.status(200).json(adver);
     } catch (err) {
       res.status(400).json({ message: err.message });
@@ -63,12 +66,44 @@ module.exports = {
     }
   },
 
-    async showAll(req, res) {
-      try {
-        const allAds = await Advertisement.find().lean();
-        res.status(200).json(allAds);
-      } catch (err) {
-        res.status(400).json({ message: err.message });
+  async showAll(req, res) {
+    const { selectedDays, city } = req.query;
+
+    const days = JSON.parse(selectedDays);
+
+    let filters = {};
+    let Iso8001Days = [];
+
+    if (days[0] === "") {
+      filters = {};
+    } else {
+      Iso8001Days = days.map((day) => new Date(day));
+    }
+
+    const Iso8001DaysString = Iso8001Days.map((day) => day.toISOString());
+
+    try {
+      if (Iso8001DaysString) {
+        filters.selectedDays = { $in: Iso8001DaysString };
       }
-    },
+      const reservations = await Reservation.find(filters);
+      const reservedAdsIds = reservations.map(
+        (reservation) => reservation.advertisementId
+      );
+      let ads = "";
+      if (city) {
+        ads = await Advertisement.find({
+          _id: { $nin: reservedAdsIds },
+          city,
+        });
+      } else {
+        ads = await Advertisement.find({
+          _id: { $nin: reservedAdsIds },
+        });
+      }
+      res.status(200).json(ads);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  },
 };

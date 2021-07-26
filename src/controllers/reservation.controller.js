@@ -1,11 +1,11 @@
 const Reservation = require("../models/reservation.model");
 const Roomie = require("../models/roomie.model");
+const Advertisement = require("../models/SpaAdverModel");
 
 module.exports = {
   async create(req, res) {
     try {
       const { body, roomie } = req;
-
       const userRoomie = await Roomie.findById(roomie);
       if (!userRoomie) {
         throw new Error("User not found");
@@ -13,6 +13,10 @@ module.exports = {
 
       const reservation = await Reservation.create({ ...body, roomie });
       userRoomie.allReservations.push(reservation._id);
+
+      const advertisement = await Advertisement.findById(body.advertisementId);
+      advertisement.reservations.push(reservation._id);
+      await advertisement.save({ validateBeforeSave: false });
 
       await userRoomie.save({ validateBeforeSave: false });
       res.status(201).json(reservation);
@@ -44,14 +48,6 @@ module.exports = {
       res.status(200).json(reservations);
     } catch (err) {
       res.status(404).json({ message: err.message });
-    }
-  },
-  async showAll(req, res) {
-    try {
-      const allReservations = await Reservation.find().lean();
-      res.status(200).json(allReservations);
-    } catch (err) {
-      res.status(400).json({ message: err.message });
     }
   },
 
