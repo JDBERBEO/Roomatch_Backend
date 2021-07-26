@@ -45,6 +45,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    profilePhoto: {
+      type: String,
+      required: false,
+    },
     allReservations: {
       type: [{ type: Schema.Types.ObjectId, ref: "Reservation" }],
     },

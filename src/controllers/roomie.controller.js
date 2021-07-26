@@ -20,6 +20,18 @@ module.exports = {
     }
   },
 
+  async photoProfile(req, res) {
+    try {
+      const { body } = req
+      const photo = await Roomie.create(body.photoProfile)
+
+      res.status(201).json({ roomie, body })
+    } catch (err) {
+      res.status(400).json({ message: err.message })
+    }
+  },
+
+
   async signin(req, res) {
     try {
       const { email, password } = req.body
