@@ -44,7 +44,7 @@ const userSchema = new Schema(
     },
     profilePhoto: {
       type: String,
-      required: true,
+      required: false,
     },
     posts: {
       type: [{ type: Schema.Types.ObjectId, ref: "Advertisement" }],
