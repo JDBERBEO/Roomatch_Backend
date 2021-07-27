@@ -18,14 +18,15 @@ exports.formData = (req, res, next) => {
   let uploadingCount = 0;
 
   function done() {
-    if (uploadingFile) return next();
+    if (uploadingFile) return;
+    next();
   }
   //busboy esta orientado a eventos
   busboy.on("field", (key, value) => {
     req.body[key] = value;
   }); //type text
 
-  busboy.on("profilePhoto", (key, file) => {
+  busboy.on("file", (key, file) => {
     //crear un stream de caludianari para super pedazo por pedazo
     uploadingFile = true;
     uploadingCount++;
@@ -38,20 +39,19 @@ exports.formData = (req, res, next) => {
           throw new Error("invalid image");
         }
         req.body[key] = res.secure_url;
-        console.log("req.bodyKey", req.body[key]);
+
         uploadingFile = false;
         uploadingCount--;
+
         done();
       }
     );
 
     file.on("data", (buffer) => {
       stream.write(buffer);
-      console.log(buffer);
     });
     file.on("end", () => {
       stream.end();
-      console.log("end");
     });
   }); //type fiel
 

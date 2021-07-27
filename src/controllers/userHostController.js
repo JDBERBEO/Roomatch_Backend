@@ -36,17 +36,17 @@ module.exports = {
   //   }
   // },
 
-
   async update(req, res) {
     try {
       const { roomie, body } = req;
+      console.log("body", body);
       const profile = await UserHost.findByIdAndUpdate(roomie, body, {
         new: true,
       });
       res.status(200).json(profile);
     } catch (err) {
       res.status(400).json({ message: err.message });
-      console.dir(err.message)
+      console.dir(err.message);
     }
   },
 
