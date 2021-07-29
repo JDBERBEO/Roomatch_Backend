@@ -40,7 +40,13 @@ exports.formData = (req, res, next) => {
         if (err) {
           throw new Error("invalid image");
         }
-        req.body[key] = res.secure_url;
+
+        req.body["photo"] = [];
+        console.log("res.secure_url", res.secure_url);
+
+        req.body["photo"].push(res.secure_url);
+
+        console.log("reqphto", req.body["photo"]);
 
         uploadingFile = false;
         uploadingCount--;

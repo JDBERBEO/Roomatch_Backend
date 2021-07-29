@@ -16,7 +16,7 @@ const adverSchema = new Schema(
       required: [true, "The field is required"],
     },
     parking: { type: Number, required: [true, "The field is required"] },
-    photo: { type: [String], required: [true, "The field is required"] },
+    photos: { type: [String], required: [true, "The field is required"] },
     tags: { type: [String], required: [false, "The field is required"] },
     price: { type: Number, required: [true, "The field is required"] },
     public_services: {
