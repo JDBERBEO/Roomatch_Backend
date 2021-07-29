@@ -8,7 +8,6 @@ module.exports = {
     try {
       const { body } = req;
       const userh = await UserHost.create(body);
-      console.log(userh)
       const token = jwt.sign({ userId: userh._id }, "" + process.env.SECRET, {
         expiresIn: 60 * 60 * 24 * 365,
       });

@@ -21,7 +21,6 @@ async function verify(){
     }
 }
 async function welcomeRoomie({email, name}){
-    console.log("email: ", email, "name: ", name)
     await transporter.sendMail({
         from: `"${process.env.MAILER_USERNAME}" <${process.env.MAILER_USER}>`,
         to: email,
@@ -41,7 +40,6 @@ async function welcomeRoomie({email, name}){
     }
 
 async function welcomeHost({email, name}){
-    console.log("email: ", email, "name: ", name)
     await transporter.sendMail({
         from: `"${process.env.MAILER_USERNAME}" <${process.env.MAILER_USER}>`,
         to: email,
