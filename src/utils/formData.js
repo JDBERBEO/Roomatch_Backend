@@ -19,6 +19,7 @@ exports.formData = (req, res, next) => {
 
   function done() {
     if (uploadingFile) return;
+    if (uploadingCount > 0) return;
     next();
   }
   //busboy esta orientado a eventos
@@ -30,6 +31,7 @@ exports.formData = (req, res, next) => {
     //crear un stream de caludianari para super pedazo por pedazo
     uploadingFile = true;
     uploadingCount++;
+    console.log("uploadingCount ++", uploadingCount);
     const stream = cloudinary.uploader.upload_stream(
       {
         upload_preset: "roomatch_proyect",
@@ -42,7 +44,7 @@ exports.formData = (req, res, next) => {
 
         uploadingFile = false;
         uploadingCount--;
-
+        console.log("uploadingCount --", uploadingCount);
         done();
       }
     );

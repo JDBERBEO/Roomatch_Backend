@@ -6,6 +6,55 @@ module.exports = {
   async create(req, res) {
     try {
       const { body, roomie } = req;
+      console.log("body", body);
+
+      //obj que debemos iterar sobre las propiedades que se llamen spacephoto i
+
+      //iteramos sobre las propiedades del obj
+
+      let valoresBody = Object.values(body);
+      console.log("valores BOdy");
+      // const j = 0;
+      // console.log("body space phto", body[`SpacePhoto${j}`]);
+
+      for (let i = 0; i < valoresBody.length; i++) {
+        console.log("valolores Body", valoresBody[i]);
+        console.log("space photo body", body[`SpacePhoto${i}`]);
+
+        if (valores[i] === body[`SpacePhoto${i}`]) {
+          console.log("coincidencia");
+        }
+      }
+
+      // for (let llave in body) {
+      //   // imprimir llave + valor
+      //   console.log(llave + body[llave]);
+      // }
+
+      //obtener las llaves con for tradicional
+      //1. metodo del constructor objeto
+      // let objectkeys = Object.keys(body);
+      // console.log("objetckeys", objectkeys);
+      // 2.despues recorrer con for tradicional
+      // let objectvalues = Object.values(body);
+      // console.log("objectvalues", objectvalues);
+
+      // let photos = [...Object.values(body)];
+      // console.log("photo", photos);
+
+      // for (let i = 0; i < photos.length; i++) {
+      //   let photo = photos[i];
+      //   console.log(object[key]);
+      //   console.log(objectvalues);
+      // }
+
+      // console.log("body length", body.length);
+      // for (let i = 0; i < body.length; i++) {
+      //   console.log("hola mundo");
+
+      //   // console.log(`body picture${i}`, body.SpacePhoto + i);
+      // }
+
       const advertisement = await Advertisement.create({
         ...body,
         host: roomie,
