@@ -8,10 +8,12 @@ const reservationRouter = require("./routes/reservation");
 const inspectorRouter = require("./routes/inspector");
 const hostRouter = require("./routes/userHost");
 const spaAdver = require("./routes/spaAdver");
+const {verify} = require("./utils/mailer")
 
 const port = process.env.PORT || 8000;
 const app = express();
 connect();
+verify()
 
 app.use(express.json());
 app.use(cors());
