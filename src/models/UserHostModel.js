@@ -23,6 +23,7 @@ const userSchema = new Schema(
           async validator(email) {
             try {
               const userhost = await models.Userhost.findOne({ email });
+              console.log(userhost)
               return !userhost;
             } catch (error) {
               return false;

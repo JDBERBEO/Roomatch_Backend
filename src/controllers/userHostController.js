@@ -1,16 +1,19 @@
 const UserHost = require("../models/UserHostModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const {welcomeHost} = require("../utils/mailer")
 
 module.exports = {
   async signup(req, res) {
     try {
       const { body } = req;
       const userh = await UserHost.create(body);
+      console.log(userh)
       const token = jwt.sign({ userId: userh._id }, "" + process.env.SECRET, {
         expiresIn: 60 * 60 * 24 * 365,
       });
-      res.status(201).json({ token });
+      await welcomeHost(userh)
+      res.status(201).json({ token, message: "check your email" });
     } catch (err) {
       res.status(400).json({ message: err.message });
       console.log({ message: err.message });

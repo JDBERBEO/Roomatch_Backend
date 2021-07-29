@@ -60,7 +60,7 @@ module.exports = {
     try {
       const { adverId } = req.params;
       const adver = await Advertisement.findByIdAndDelete(adverId);
-      res.status(400).json(adver);
+      res.status(200).json(adver);
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
