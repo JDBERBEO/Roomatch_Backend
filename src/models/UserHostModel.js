@@ -42,11 +42,12 @@ const userSchema = new Schema(
       required: true,
       minlength: [20, "Do a better description about you (minimum 20 words)"],
     },
-    profilePhoto: {
-      type: String,
+    photos: {
+      type: [String],
       required: false,
-      default:
+      default: [
         "https://res.cloudinary.com/evollve-sas/image/upload/v1627351292/roomatch/166-1666981_silhouette-unknown-people-hd-png-download_gnkzz1.jpg",
+      ],
     },
     posts: {
       type: [{ type: Schema.Types.ObjectId, ref: "Advertisement" }],

@@ -21,9 +21,15 @@ module.exports = {
   async photoProfile(req, res) {
     try {
       const { roomie, body } = req;
-      const profilePhoto = await Roomie.findByIdAndUpdate(roomie, { profilePhoto: body.profilePhoto }, {
-        new: true,
-      });
+      console.log("body desde photoprofile", body);
+      const profilePhoto = await Roomie.findByIdAndUpdate(
+        roomie,
+        { photos: body.photos[0] },
+        {
+          new: true,
+        }
+      );
+      console.log("profilePhoto", profilePhoto);
       res.status(201).json(profilePhoto);
     } catch (err) {
       res.status(400).json({ message: err.message });
@@ -76,6 +82,7 @@ module.exports = {
   async update(req, res) {
     try {
       const { roomie, body } = req;
+      console.log("body desde update", body);
       const profile = await Roomie.findByIdAndUpdate(roomie, body, {
         new: true,
       });

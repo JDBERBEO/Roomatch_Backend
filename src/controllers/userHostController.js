@@ -39,10 +39,15 @@ module.exports = {
   async update(req, res) {
     try {
       const { roomie, body } = req;
-      console.log("body", body);
+      console.log("body phots", body.photos[0]);
+      if (body.photos.length === 0) {
+        body.photos[0] =
+          "https://res.cloudinary.com/evollve-sas/image/upload/v1627351292/roomatch/166-1666981_silhouette-unknown-people-hd-png-download_gnkzz1.jpg";
+      }
       const profile = await UserHost.findByIdAndUpdate(roomie, body, {
         new: true,
       });
+      console.log("profile", profile);
       res.status(200).json(profile);
     } catch (err) {
       res.status(400).json({ message: err.message });

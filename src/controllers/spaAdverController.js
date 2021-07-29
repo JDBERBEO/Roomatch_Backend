@@ -6,7 +6,7 @@ module.exports = {
   async create(req, res) {
     try {
       const { body, roomie } = req;
-      console.log("body", body);
+      // console.log("body", body);
 
       //obj que debemos iterar sobre las propiedades que se llamen spacephoto i
 
