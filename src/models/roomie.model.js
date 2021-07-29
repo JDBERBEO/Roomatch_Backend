@@ -43,11 +43,12 @@ const userSchema = new Schema(
     },
     description: {
       type: String,
-      required: true,
+      required: false,
     },
     profilePhoto: {
       type: String,
-      required: false,
+      default:
+        "https://res.cloudinary.com/evollve-sas/image/upload/v1627351292/roomatch/166-1666981_silhouette-unknown-people-hd-png-download_gnkzz1.jpg",
     },
     allReservations: {
       type: [{ type: Schema.Types.ObjectId, ref: "Reservation" }],

@@ -20,13 +20,11 @@ module.exports = {
 
   async photoProfile(req, res) {
     try {
-      console.log("request", req);
       const { roomie, body } = req;
-      console.log("body", body);
-      console.log("roomie", roomie);
-      const photo = await Roomie.create(body);
-
-      res.status(201).json({ roomie, photo });
+      const profilePhoto = await Roomie.findByIdAndUpdate(roomie, { profilePhoto: body.profilePhoto }, {
+        new: true,
+      });
+      res.status(201).json(profilePhoto);
     } catch (err) {
       res.status(400).json({ message: err.message });
     }

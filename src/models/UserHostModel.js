@@ -44,6 +44,7 @@ const userSchema = new Schema(
     },
     profilePhoto: {
       type: String,
+      required: false,
       default:
         "https://res.cloudinary.com/evollve-sas/image/upload/v1627351292/roomatch/166-1666981_silhouette-unknown-people-hd-png-download_gnkzz1.jpg",
     },
