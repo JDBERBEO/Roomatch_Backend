@@ -27,6 +27,8 @@ exports.formData = (req, res, next) => {
     req.body[key] = value;
   }); //type text
 
+  req.body.photos = [];
+
   busboy.on("file", (key, file) => {
     //crear un stream de caludianari para super pedazo por pedazo
     uploadingFile = true;
@@ -41,12 +43,12 @@ exports.formData = (req, res, next) => {
           throw new Error("invalid image");
         }
 
-        req.body["photo"] = [];
-        console.log("res.secure_url", res.secure_url);
+        // req.body["photo"] = [];
+        // console.log("res.secure_url", res.secure_url);
 
-        req.body["photo"].push(res.secure_url);
+        req.body["photos"].push(res.secure_url);
 
-        console.log("reqphto", req.body["photo"]);
+        // console.log("reqphto", req.body["photo"]);
 
         uploadingFile = false;
         uploadingCount--;

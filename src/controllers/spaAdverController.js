@@ -12,19 +12,19 @@ module.exports = {
 
       //iteramos sobre las propiedades del obj
 
-      let valoresBody = Object.values(body);
-      console.log("valores BOdy");
+      // let valoresBody = Object.values(body);
+      // console.log("valores BOdy");
       // const j = 0;
       // console.log("body space phto", body[`SpacePhoto${j}`]);
 
-      for (let i = 0; i < valoresBody.length; i++) {
-        console.log("valolores Body", valoresBody[i]);
-        console.log("space photo body", body[`SpacePhoto${i}`]);
+      // for (let i = 0; i < valoresBody.length; i++) {
+      //   console.log("valolores Body", valoresBody[i]);
+      //   console.log("space photo body", body[`SpacePhoto${i}`]);
 
-        if (valores[i] === body[`SpacePhoto${i}`]) {
-          console.log("coincidencia");
-        }
-      }
+      //   if (valores[i] === body[`SpacePhoto${i}`]) {
+      //     console.log("coincidencia");
+      //   }
+      // }
 
       // for (let llave in body) {
       //   // imprimir llave + valor
@@ -65,6 +65,7 @@ module.exports = {
       res.status(201).json(advertisement);
     } catch (err) {
       res.status(400).json({ message: err.message });
+      console.log(err.message);
     }
   },
 
