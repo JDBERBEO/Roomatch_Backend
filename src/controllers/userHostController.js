@@ -91,7 +91,8 @@ module.exports = {
   async show(req, res) {
     try {
       const { roomie } = req;
-      const profile = await UserHost.findById(roomie).select("-password");
+      const profile = await UserHost.findById(roomie);
+      // .select("-password");
       res.status(200).json(profile);
     } catch (error) {
       res.status(404).json({ message: error.message });
