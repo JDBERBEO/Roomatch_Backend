@@ -29,12 +29,11 @@ async function welcomeRoomie({email, name}){
         <div>
             <h1>Hi ${name}</h1>
             <p>
-            Know, you are part of a community of thousands of people who share their spaces with others to be part of a life experience. In roomatch we share good vibes and we are always trying to connect people to find their ideal space and roommate, we hope you enjoy this new travel.
+            Now, you are part of a community of thousands of people who search for spaces around the world and wants to share experiences with others. In roomatch we share good vibes and we are always trying to connect people to find their ideal space and roommate, we hope you enjoy this new travel.
             <img width="300" height= "300" src= "https://images.unsplash.com/photo-1520438901-f822f9f4be01?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=677&q=80" /><br>
             Photo by <a href="https://unsplash.com/@theplaceforthings?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Dylan Fout</a> on <a href="https://unsplash.com/s/photos/friends-house?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
             </p>
         </div>
-
         `,
         })
     }
@@ -48,7 +47,7 @@ async function welcomeHost({email, name}){
         <div>
             <h1>Hi ${name}</h1>
             <p>
-            Know, you are part of a community of thousands of people who share their spaces with others to be part of a life experience. In roomatch we share good vibes and we are always trying to connect people to find their ideal space and roommate, we hope you enjoy this new travel.
+            Now, you are part of a community of thousands of people who share their spaces with others to be part of a life experience. In roomatch we share good vibes and we are always trying to connect people to find their ideal space and roommate, we hope you enjoy this new travel.
             <img width="300" height= "300" src= "https://images.unsplash.com/photo-1520438901-f822f9f4be01?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=677&q=80" /><br>
             Photo by <a href="https://unsplash.com/@theplaceforthings?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Dylan Fout</a> on <a href="https://unsplash.com/s/photos/friends-house?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
             </p>
