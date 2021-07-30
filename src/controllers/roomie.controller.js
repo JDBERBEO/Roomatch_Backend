@@ -21,7 +21,7 @@ module.exports = {
   async photoProfile(req, res) {
     try {
       const { roomie, body } = req;
-      console.log("body Photos desde photoprofile", body.photos);
+
       if (body.photos.length === 0) {
         body.photos[0] =
           "https://res.cloudinary.com/evollve-sas/image/upload/v1627351292/roomatch/166-1666981_silhouette-unknown-people-hd-png-download_gnkzz1.jpg";
@@ -33,7 +33,6 @@ module.exports = {
           new: true,
         }
       );
-      console.log("profilePhoto", profilePhoto);
       res.status(201).json(profilePhoto);
     } catch (err) {
       res.status(400).json({ message: err.message });
@@ -63,7 +62,6 @@ module.exports = {
       res.status(201).json({ token });
     } catch (error) {
       res.status(400).json({ message: error.message });
-      console.log(error);
     }
   },
   async show(req, res) {
@@ -84,11 +82,8 @@ module.exports = {
     }
   },
   async update(req, res) {
-    console.log("res", res);
     try {
       const { roomie, body } = req;
-      console.log(roomie);
-      console.log("body desde update", body);
       const profile = await Roomie.findByIdAndUpdate(roomie, body, {
         new: true,
       });
