@@ -1,5 +1,4 @@
 const Busboy = require("busboy");
-//crear una instancia de este prototipo
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
@@ -10,23 +9,25 @@ cloudinary.config({
 
 exports.formData = (req, res, next) => {
   const busboy = new Busboy({ headers: req.headers });
-  //busboy intancia de BUsboy para que sepa que
-  // todos los encabezados que llegan en la petion se lo voy a pasar a busboy
-  req.body = {}; //se reciben campos typo texto, string booleano numero o archivo file bufer string
+
+  req.body = {};
 
   let uploadingFile = false;
   let uploadingCount = 0;
 
   function done() {
-    if (uploadingFile) return next();
+    if (uploadingFile) return;
+    if (uploadingCount > 0) return;
+    next();
   }
-  //busboy esta orientado a eventos
+
   busboy.on("field", (key, value) => {
     req.body[key] = value;
-  }); //type text
+  });
 
-  busboy.on("profilePhoto", (key, file) => {
-    //crear un stream de caludianari para super pedazo por pedazo
+  req.body.photos = [];
+
+  busboy.on("file", (key, file) => {
     uploadingFile = true;
     uploadingCount++;
     const stream = cloudinary.uploader.upload_stream(
@@ -37,8 +38,9 @@ exports.formData = (req, res, next) => {
         if (err) {
           throw new Error("invalid image");
         }
-        req.body[key] = res.secure_url;
-        console.log("req.bodyKey", req.body[key]);
+
+        req.body["photos"].push(res.secure_url);
+
         uploadingFile = false;
         uploadingCount--;
         done();
@@ -47,13 +49,11 @@ exports.formData = (req, res, next) => {
 
     file.on("data", (buffer) => {
       stream.write(buffer);
-      console.log(buffer);
     });
     file.on("end", () => {
       stream.end();
-      console.log("end");
     });
-  }); //type fiel
+  });
 
   busboy.on("finish", () => {
     done();

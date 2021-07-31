@@ -6,6 +6,7 @@ module.exports = {
   async create(req, res) {
     try {
       const { body, roomie } = req;
+
       const advertisement = await Advertisement.create({
         ...body,
         host: roomie,
@@ -16,6 +17,7 @@ module.exports = {
       res.status(201).json(advertisement);
     } catch (err) {
       res.status(400).json({ message: err.message });
+      console.log(err.message);
     }
   },
 

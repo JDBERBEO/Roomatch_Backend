@@ -1,18 +1,19 @@
 const Roomie = require("../models/roomie.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const {welcomeRoomie} = require("../utils/mailer")
+const { welcomeRoomie } = require("../utils/mailer");
 
 module.exports = {
   async signup(req, res) {
     try {
       const { body } = req;
       const roomie = await Roomie.create(body);
+
       const token = jwt.sign({ userId: roomie._id }, process.env.SECRET, {
         expiresIn: 60 * 60 * 24 * 365,
       });
-      await welcomeRoomie(roomie)
-      res.status(201).json({ token, message: "check your email" });
+
+      res.status(201).json({ token });
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
@@ -20,13 +21,20 @@ module.exports = {
 
   async photoProfile(req, res) {
     try {
-      console.log("request", req);
       const { roomie, body } = req;
-      console.log("body", body);
-      console.log("roomie", roomie);
-      const photo = await Roomie.create(body);
 
-      res.status(201).json({ roomie, photo });
+      if (body.photos.length === 0) {
+        body.photos[0] =
+          "https://res.cloudinary.com/evollve-sas/image/upload/v1627351292/roomatch/166-1666981_silhouette-unknown-people-hd-png-download_gnkzz1.jpg";
+      }
+      const profilePhoto = await Roomie.findByIdAndUpdate(
+        roomie,
+        { photos: body.photos[0] },
+        {
+          new: true,
+        }
+      );
+      res.status(201).json(profilePhoto);
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
@@ -55,7 +63,6 @@ module.exports = {
       res.status(201).json({ token });
     } catch (error) {
       res.status(400).json({ message: error.message });
-      console.log(error);
     }
   },
   async show(req, res) {
