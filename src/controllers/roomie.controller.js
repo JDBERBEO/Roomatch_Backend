@@ -1,6 +1,7 @@
 const Roomie = require("../models/roomie.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { welcomeRoomie } = require("../utils/mailer");
 
 module.exports = {
   async signup(req, res) {
