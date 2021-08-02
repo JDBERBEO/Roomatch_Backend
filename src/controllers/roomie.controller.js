@@ -48,6 +48,7 @@ module.exports = {
 
       if (!roomie) {
         throw new Error("Password or invalid email");
+        console.log("error", Error);
       }
 
       const isValid = await bcrypt.compare(password, roomie.password);
@@ -62,6 +63,8 @@ module.exports = {
 
       res.status(201).json({ token });
     } catch (error) {
+      console.log("ERROR", error.message);
+
       res.status(400).json({ message: error.message });
     }
   },

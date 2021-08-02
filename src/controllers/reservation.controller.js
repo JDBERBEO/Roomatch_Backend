@@ -44,7 +44,9 @@ module.exports = {
   async list(req, res) {
     try {
       const { roomie } = req;
-      const reservations = await Reservation.find({ roomie }).select("");
+      const reservations = await Reservation.find({ roomie }).populate(
+        "advertisementId"
+      );
       res.status(200).json(reservations);
     } catch (err) {
       res.status(404).json({ message: err.message });
