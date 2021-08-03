@@ -26,6 +26,6 @@ app.use("/inspectors", inspectorRouter);
 app.use("/roomie", roomieRouter);
 app.use("/host", hostRouter);
 app.use("/advertisements", spaAdver);
-app.listen(8000, () => {
+app.listen(port, () => {
   console.log(`App runnig at http://localhost:${port}`);
 });
