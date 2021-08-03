@@ -6,6 +6,10 @@
   "repository": "https://github.com/JDBERBEO/Roomatch_Backend.git",
   "author": "Juan <jd.berbeo@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node":"14.14.0",
+    "yarn":"1.22.10"
+  },
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js"
