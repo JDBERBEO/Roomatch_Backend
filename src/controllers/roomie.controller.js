@@ -8,11 +8,10 @@ module.exports = {
     try {
       const { body } = req;
       const roomie = await Roomie.create(body);
-
       const token = jwt.sign({ userId: roomie._id }, process.env.SECRET, {
         expiresIn: 60 * 60 * 24 * 365,
       });
-
+      await welcomeRoomie(roomie)
       res.status(201).json({ token });
     } catch (err) {
       res.status(400).json({ message: err.message });

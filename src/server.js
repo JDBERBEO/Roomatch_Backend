@@ -16,16 +16,18 @@ connect();
 verify()
 
 app.use(express.json());
-app.use(cors({
-  origin: process.env.FRONTEND_URL
-}));
+app.use(cors({origin: process.env.FRONTEND_URL}));
 app.use(morgan("dev"));
+
+app.get('/', (req, res) => {
+  res.json({message: "conectado"})
+})
 
 app.use("/reservations", reservationRouter);
 app.use("/inspectors", inspectorRouter);
 app.use("/roomie", roomieRouter);
 app.use("/host", hostRouter);
 app.use("/advertisements", spaAdver);
-app.listen(8000, () => {
+app.listen(port, () => {
   console.log(`App runnig at http://localhost:${port}`);
 });
